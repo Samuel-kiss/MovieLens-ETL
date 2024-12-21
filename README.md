@@ -40,6 +40,7 @@ Navrhnutý bol **hviezdicový model (star schema)**, pre efektívnu analýzu kde
 - **`dim_time`**: Obsahuje podrobné časové údaje (hodina, AM/PM).
 - **`dim_genres`**: Obsahuje podrobné údaje o žánroch (názov žánru).
 - **`dim_movies`**: Obsahuje podrobné údaje o filmoch (titulok a rok vydania).
+  
 Štruktúra hviezdicového modelu je znázornená na diagrame nižšie. Diagram ukazuje prepojenia medzi faktovou tabuľkou a dimenziami, čo zjednodušuje pochopenie a implementáciu modelu.
 
 <p align="center">
