@@ -37,7 +37,6 @@ Navrhnutý bol **hviezdicový model (star schema)**, pre efektívnu analýzu kde
 - **`dim_users`**: Obsahuje demografické údaje o používateľoch, ako sú vekové kategórie, povolanie a pohlavie.
 - **`dim_tags`**: Obsahuje podrobné informácie o tagoch (popis, dátum vzniku).
 - **`dim_date`**: Zahrňuje informácie o dátumoch hodnotení (deň, mesiac, rok).
-- **`dim_time`**: Obsahuje podrobné časové údaje (hodina, AM/PM).
 - **`dim_genres`**: Obsahuje podrobné údaje o žánroch (názov žánru).
 - **`dim_movies`**: Obsahuje podrobné údaje o filmoch (titulok a rok vydania).
   
