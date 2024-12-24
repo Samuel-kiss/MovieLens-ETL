@@ -25,7 +25,7 @@ Zdrojové dáta pochádzajú z GroupLens datasetu dostupného [tu](https://group
 Surové dáta sú usporiadané v relačnom modeli, ktorý je znázornený na **entitno-relačnom diagrame (ERD)**:
 
 <p align="center">
-  <img src="https://github.com/Samuel-kiss/MovieLens-ETL/blob/main/MovieLens_ERD.png?raw=true" alt="ERD Schema">
+  <img src=https://github.com/Samuel-kiss/MovieLens-ETL/blob/main/star_scheme.png alt="ERD Schema">
   <br>
   <em>Obrázok 1 Entitno-relačná schéma MovieLens</em>
 </p>
