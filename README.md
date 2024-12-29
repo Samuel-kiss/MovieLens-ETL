@@ -252,7 +252,7 @@ LIMIT 10;
 ```
 ---
 ### **Graf 4: Celková aktivita v priebehu dňa**
-Tabuľka znázorňuje, ako sú hodnotenia rozdelené podľa jednotlivých časových úsekov počas dňa. Z údajov vyplýva, že najväčšia aktivita je zaznamenaná v čase `23:26:40` s celkovým hodnotením `82040`. Tento trend naznačuje, v akom časovom úseku používatilia hodnotili filmy najčastejšie.
+Tabuľka znázorňuje, ako sú hodnotenia rozdelené podľa jednotlivých časových úsekov počas dňa. Z údajov vyplýva, že najväčšia aktivita je zaznamenaná v čase `23:26:40` s celkovým počtom hodnotení `82040`. Tento trend naznačuje, v akom časovom úseku používatilia hodnotili filmy najčastejšie.
 
 ```sql
 SELECT 
@@ -305,7 +305,7 @@ GROUP BY u.gender;
 ```
 ---
 ### **Graf 8: Aktivita používateľov podľa vekových kategórií**
-Tento stĺpcový graf ukazuje, ako sa aktivita používateľov líši medzi rôznymi vekovými skupinami. Z grafu vyplýva, že používatelia vo vekovej kategórii `55+` sú aktívni rovnomerne počas celého dňa, zatiaľ čo ostatné vekové skupiny vykazujú výrazne nižšiu aktivitu a majú obmedzený čas na hodnotenie, čo môže súvisieť s pracovnými povinnosťami. Tieto informácie môžu pomôcť lepšie zacieliť obsah a plánovať aktivity pre rôzne vekové kategórie.
+Tento stĺpcový graf ukazuje, ako sa aktivita používateľov líši medzi rôznymi vekovými skupinami. Z grafu vyplýva, že používatelia vo vekovej kategórii `25-34` sú najviac aktívny medzi všetkými skupinami, zatiaľ čo ostatné vekové skupiny vykazujú výrazne nižšiu aktivitu, čo môže súvisieť s pracovnými povinnosťami. Tieto informácie môžu pomôcť lepšie zacieliť obsah a plánovať aktivity pre rôzne vekové kategórie.
 ```sql
 SELECT 
     u.age_group AS age_group,
