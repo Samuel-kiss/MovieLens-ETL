@@ -197,7 +197,7 @@ ETL proces v Snowflake umožnil spracovanie pôvodných dát z `.csv` formátu d
 Dashboard obsahuje `8 vizualizácií`, ktoré poskytujú základný prehľad o kľúčových metrikách a trendoch týkajúcich sa filmov, používateľov a hodnotení. Tieto vizualizácie odpovedajú na dôležité otázky a umožňujú lepšie pochopiť správanie používateľov a ich preferencie.
 
 <p align="center">
-  <img src="https://github.com/JKabathova/AmazonBooks-ETL/blob/master/amazonbooks_dashboard.png" alt="ERD Schema">
+  <img src="https://github.com/Samuel-kiss/MovieLens-ETL/blob/main/Dashboard.png" alt="ERD Schema">
   <br>
   <em>Obrázok 3 Dashboard MovieLens datasetu</em>
 </p>
