@@ -298,9 +298,9 @@ Graf znázorňuje rozdiely v počte hodnotení medzi mužmi a ženami. Z údajov
 ```sql
 SELECT 
     u.gender,
-    COUNT(f.fact_ratingID) AS total_ratings
+    COUNT(f.ratingID) AS total_ratings
 FROM FACT_RATINGS f
-JOIN DIM_USERS u ON f.userID = u.dim_userId
+JOIN DIM_USERS u ON f.userID = u.dim_userID
 GROUP BY u.gender;
 ```
 ---
