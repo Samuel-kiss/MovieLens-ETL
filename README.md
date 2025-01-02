@@ -59,14 +59,14 @@ Dáta zo zdrojového datasetu (formát `.csv`) boli najprv nahraté do Snowflake
 
 #### Príklad kódu:
 ```sql
-CREATE OR REPLACE STAGE my_stage;
+CREATE OR REPLACE STAGE Hippo_stage;
 ```
 Do stage boli následne nahraté súbory obsahujúce údaje o filmoch, používateľoch, hodnoteniach, zamestnaniach, tagoch, žánroch a vekových skupín. Dáta boli importované do staging tabuliek pomocou príkazu `COPY INTO`. Pre každú tabuľku sa použil podobný príkaz:
 
 ```sql
-COPY INTO occupations_staging
-FROM @my_stage/occupations.csv
-FILE_FORMAT = (TYPE = 'CSV' SKIP_HEADER = 1);
+COPY INTO age_group_staging
+FROM @Hippo_stage/age_group.csv
+FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
 ```
 
 V prípade nekonzistentných záznamov bol použitý parameter `ON_ERROR = 'CONTINUE'`, ktorý zabezpečil pokračovanie procesu bez prerušenia pri chybách.
@@ -76,7 +76,7 @@ V prípade nekonzistentných záznamov bol použitý parameter `ON_ERROR = 'CONT
 
 V tejto fáze boli dáta zo staging tabuliek vyčistené, transformované a obohatené. Hlavným cieľom bolo pripraviť dimenzie a faktovú tabuľku, ktoré umožnia jednoduchú a efektívnu analýzu.
 
-Dimenzie boli navrhnuté na poskytovanie kontextu pre faktovú tabuľku. `Dim_users` obsahuje údaje o používateľoch vrátane vekových kategórií, pohlavia, zamestnania. Transformácia zahŕňala rozdelenie veku používateľov do kategórií (napr. „18-24“) a pridanie popisov zamestnaní. Táto dimenzia je typu SCD 2, čo umožňuje sledovať historické zmeny v zamestnaní používateľov.
+Dimenzie boli navrhnuté na poskytovanie kontextu pre faktovú tabuľku. `DIM_USERS` obsahuje údaje o používateľoch vrátane vekových kategórií, pohlavia, zamestnania. Transformácia zahŕňala rozdelenie veku používateľov do kategórií (napr. „18-24“) a pridanie popisov zamestnaní. Táto dimenzia je typu SCD 2, čo umožňuje sledovať historické zmeny v zamestnaní používateľov.
 ```sql
 CREATE OR REPLACE TABLE DIM_USERS AS
 SELECT DISTINCT
@@ -98,9 +98,9 @@ LEFT JOIN age_group_staging g
         (g.name = '56+' AND u.age >= 56))
 ORDER BY u.user_id;
 ```
-Dimenzia `dim_date` je navrhnutá tak, aby uchovávala informácie o dátumoch hodnotení filmov. Obsahuje odvodené údaje, ako sú deň, mesiac, rok, deň v týždni (v textovom aj číselnom formáte). Táto dimenzia je štruktúrovaná tak, aby umožňovala podrobné časové analýzy, ako sú trendy hodnotení podľa dní, mesiacov alebo rokov. Z hľadiska SCD je táto dimenzia klasifikovaná ako SCD Typ 0. To znamená, že existujúce záznamy v tejto dimenzii sú nemenné a uchovávajú statické informácie.
+Dimenzia `DIM_DATE` je navrhnutá tak, aby uchovávala informácie o dátumoch hodnotení filmov. Obsahuje odvodené údaje, ako sú deň, mesiac, rok, deň v týždni (v textovom aj číselnom formáte). Táto dimenzia je štruktúrovaná tak, aby umožňovala podrobné časové analýzy, ako sú trendy hodnotení podľa dní, mesiacov alebo rokov. Z hľadiska SCD je táto dimenzia klasifikovaná ako SCD Typ 0. To znamená, že existujúce záznamy v tejto dimenzii sú nemenné a uchovávajú statické informácie.
 
-V prípade, že by bolo potrebné sledovať zmeny súvisiace s odvodenými atribútmi (napr. pracovné dni vs. sviatky), bolo by možné prehodnotiť klasifikáciu na SCD Typ 1 (aktualizácia hodnôt) alebo SCD Typ 2 (uchovávanie histórie zmien). V aktuálnom modeli však táto potreba neexistuje, preto je `dim_date` navrhnutá ako SCD Typ 0 s rozširovaním o nové záznamy podľa potreby.
+V prípade, že by bolo potrebné sledovať zmeny súvisiace s odvodenými atribútmi (napr. pracovné dni vs. sviatky), bolo by možné prehodnotiť klasifikáciu na SCD Typ 1 (aktualizácia hodnôt) alebo SCD Typ 2 (uchovávanie histórie zmien). V aktuálnom modeli však táto potreba neexistuje, preto je `DIM_DATE` navrhnutá ako SCD Typ 0 s rozširovaním o nové záznamy podľa potreby.
 
 ```sql
 CREATE TABLE DIM_DATE AS
@@ -143,7 +143,7 @@ GROUP BY CAST(rated_at AS DATE),
          DATE_PART(month, rated_at), 
          DATE_PART(year, rated_at);
 ```
-Podobne `dim_movies` obsahuje údaje o filmoch, ako sú názov a rok vydania . Táto dimenzia je typu SCD Typ 0, pretože údaje o filoch sú považované za nemenné, napríklad názov filmu alebo rok vydania sa nemenia. 
+Podobne `DIM_MOVIES` obsahuje údaje o filmoch, ako sú názov a rok vydania . Táto dimenzia je typu SCD Typ 0, pretože údaje o filoch sú považované za nemenné, napríklad názov filmu alebo rok vydania sa nemenia. 
 ```sql
 CREATE TABLE DIM_MOVIES AS 
 SELECT DISTINCT
@@ -152,7 +152,7 @@ SELECT DISTINCT
     release_year
 FROM movies_staging;
 ```
-Faktová tabuľka `fact_ratings` obsahuje záznamy o hodnoteniach a prepojenia na všetky dimenzie. Obsahuje kľúčové metriky, ako je hodnota hodnotenia a časový údaj.
+Faktová tabuľka `FACT_RATINGS` obsahuje záznamy o hodnoteniach a prepojenia na všetky dimenzie. Obsahuje kľúčové metriky, ako je hodnota hodnotenia a časový údaj.
 ```sql
 CREATE TABLE FACT_RATINGS AS
 SELECT DISTINCT
