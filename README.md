@@ -55,7 +55,7 @@ ETL proces pozostával z troch hlavných fáz: `extrahovanie` (Extract), `transf
 
 ---
 ### **3.1 Extract (Extrahovanie dát)**
-Dáta zo zdrojového datasetu (formát `.csv`) boli najprv nahraté do Snowflake prostredníctvom interného stage úložiska s názvom `my_stage`. Stage v Snowflake slúži ako dočasné úložisko na import alebo export dát. Vytvorenie stage bolo zabezpečené príkazom:
+Dáta zo zdrojového datasetu (formát `.csv`) boli najprv nahraté do Snowflake prostredníctvom interného stage úložiska s názvom `Hippo_stage`. Stage v Snowflake slúži ako dočasné úložisko na import alebo export dát. Vytvorenie stage bolo zabezpečené príkazom:
 
 #### Príklad kódu:
 ```sql
@@ -189,7 +189,7 @@ DROP TABLE IF EXISTS genres_staging;
 DROP TABLE IF EXISTS genres_movies_staging;
 DROP TABLE IF EXISTS age_group_staging;
 ```
-ETL proces v Snowflake umožnil spracovanie pôvodných dát z `.csv` formátu do viacdimenzionálneho modelu typu hviezda. Tento proces zahŕňal čistenie, obohacovanie a reorganizáciu údajov. Výsledný model umožňuje analýzu čitateľských preferencií a správania používateľov, pričom poskytuje základ pre vizualizácie a reporty.
+ETL proces v Snowflake umožnil spracovanie pôvodných dát z `.csv` formátu do viacdimenzionálneho modelu typu hviezda. Tento proces zahŕňal čistenie, obohacovanie a reorganizáciu údajov. Výsledný model umožňuje analýzu filmových preferencií a správania používateľov, pričom poskytuje základ pre vizualizácie a reporty.
 
 ---
 ## **4 Vizualizácia dát**
