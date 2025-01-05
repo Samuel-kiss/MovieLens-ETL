@@ -89,13 +89,13 @@ LEFT JOIN occupations_staging o
     ON u.occupation_id = o.occupation_id
 LEFT JOIN age_group_staging g 
     ON (
-        (g.name = 'Under 18' AND u.age < 18) OR
-        (g.name = '18-24' AND u.age BETWEEN 18 AND 24) OR
-        (g.name = '25-34' AND u.age BETWEEN 25 AND 34) OR
-        (g.name = '35-44' AND u.age BETWEEN 35 AND 44) OR
-        (g.name = '45-49' AND u.age BETWEEN 45 AND 49) OR
-        (g.name = '50-55' AND u.age BETWEEN 50 AND 55) OR
-        (g.name = '56+' AND u.age >= 56))
+        (g.group_id = 1 AND u.age < 18) OR
+        (g.group_id = 18 AND u.age BETWEEN 18 AND 24) OR
+        (g.group_id = 25 AND u.age BETWEEN 25 AND 34) OR
+        (g.group_id = 35 AND u.age BETWEEN 35 AND 44) OR
+        (g.group_id = 45 AND u.age BETWEEN 45 AND 49) OR
+        (g.group_id = 50 AND u.age BETWEEN 50 AND 55) OR
+        (g.group_id = 56 AND u.age >= 56))
 ORDER BY u.user_id;
 ```
 Dimenzia `DIM_DATE` je navrhnutá tak, aby uchovávala informácie o dátumoch hodnotení filmov. Obsahuje odvodené údaje, ako sú deň, mesiac, rok, deň v týždni (v textovom aj číselnom formáte). Táto dimenzia je štruktúrovaná tak, aby umožňovala podrobné časové analýzy, ako sú trendy hodnotení podľa dní, mesiacov alebo rokov. Z hľadiska SCD je táto dimenzia klasifikovaná ako SCD Typ 0. To znamená, že existujúce záznamy v tejto dimenzii sú nemenné a uchovávajú statické informácie.
