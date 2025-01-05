@@ -1,4 +1,4 @@
---- Použitie roly
+--- Použitie role
 USE ROLE TRAINING_ROLE;
 --- Vytvorenie a použitie skladiska 
 CREATE WAREHOUSE IF NOT EXISTS HIPPO_WH;
@@ -13,7 +13,7 @@ USE SCHEMA HIPPO_MovieLens.staging;
 CREATE OR REPLACE STAGE Hippo_stage;
 
 
---- 1. Vytváranie tabuliek na vloženie csv súborv.
+--- 1. Vytváranie tabuliek na vloženie csv súborov.
 CREATE TABLE age_group_staging(
     group_id INT PRIMARY KEY,
     name VARCHAR(45)
@@ -67,13 +67,13 @@ CREATE TABLE tags_staging(
     tag_id INT PRIMARY KEY,
     user_id INT,
     movie_id INT,
-    name VARCHAR(255),
+    name VARCHAR(4000),
     created_at DATETIME,
     FOREIGN KEY (user_id) REFERENCES users_staging(user_id),
     FOREIGN KEY (movie_id) REFERENCES movies_staging(movie_id)
 );
 
-  --- 2. Importovanie údajov z csv súborov do tabuliek 
+ --- 2. Importovanie údajov z csv súborov do tabuliek 
 COPY INTO age_group_staging
 FROM @Hippo_stage/age_group.csv
 FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
@@ -119,13 +119,13 @@ LEFT JOIN occupations_staging o
     ON u.occupation_id = o.occupation_id
 LEFT JOIN age_group_staging g 
     ON (
-        (g.name = 'Under 18' AND u.age < 18) OR
-        (g.name = '18-24' AND u.age BETWEEN 18 AND 24) OR
-        (g.name = '25-34' AND u.age BETWEEN 25 AND 34) OR
-        (g.name = '35-44' AND u.age BETWEEN 35 AND 44) OR
-        (g.name = '45-49' AND u.age BETWEEN 45 AND 49) OR
-        (g.name = '50-55' AND u.age BETWEEN 50 AND 55) OR
-        (g.name = '56+' AND u.age >= 56))
+        (g.group_id = 1 AND u.age < 18) OR
+        (g.group_id = 18 AND u.age BETWEEN 18 AND 24) OR
+        (g.group_id = 25 AND u.age BETWEEN 25 AND 34) OR
+        (g.group_id = 35 AND u.age BETWEEN 35 AND 44) OR
+        (g.group_id = 45 AND u.age BETWEEN 45 AND 49) OR
+        (g.group_id = 50 AND u.age BETWEEN 50 AND 55) OR
+        (g.group_id = 56 AND u.age >= 56))
 ORDER BY u.user_id;
 
 CREATE TABLE DIM_TAGS AS 
